@@ -6,6 +6,7 @@
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://firefly-cpp.github.io/NiaARM.jl/stable)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://firefly-cpp.github.io/NiaARM.jl/dev)
 [![CI](https://github.com/firefly-cpp/NiaARM.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/firefly-cpp/NiaARM.jl/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/github/firefly-cpp/NiaARM.jl/graph/badge.svg?token=V0ZG799H5H)](https://codecov.io/github/firefly-cpp/NiaARM.jl)
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/JuliaDiff/BlueStyle)
 [![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 

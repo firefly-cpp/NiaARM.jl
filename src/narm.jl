@@ -5,7 +5,15 @@ Objective function used by optimization algorithms. Decodes `solution` into a ru
 evaluates it on `transactions` with the provided `metrics`, and inserts novel rules into
 `rules`. Returns the negated fitness so minimizers can be used for maximization.
 """
-function narm(solution::AbstractVector{Float64}; problem::Problem, features::Vector{AbstractFeature}, transactions::DataFrame, rules::Vector{Rule}, metrics::Union{Dict{Symbol,Float64},Vector{Symbol},Vector{String}}, kwargs...)
+function narm(
+    solution::AbstractVector{Float64};
+    problem::Problem,
+    features::Vector{AbstractFeature},
+    transactions::DataFrame,
+    rules::Vector{Rule},
+    metrics::Union{Dict{Symbol,Float64},Vector{Symbol},Vector{String}},
+    kwargs...,
+)
     if length(solution) != problem.dimension
         throw(DimensionMismatch("$(length(solution)) != $(problem.dimension)"))
     end
@@ -17,11 +25,11 @@ function narm(solution::AbstractVector{Float64}; problem::Problem, features::Vec
     # calculate cut point
     cut = cut_point(cut_value, length(features))
     # build a rule from candidate solution
-    rule = build_rule(solution[begin:end-1], features)
+    rule = build_rule(solution[begin:(end - 1)], features)
 
     # get antecedent and consequent of rule
     antecedent = rule[begin:cut]
-    consequent = rule[cut+1:end]
+    consequent = rule[(cut + 1):end]
 
     antecedent = collect(skipmissing(antecedent))
     consequent = collect(skipmissing(consequent))
@@ -54,7 +62,9 @@ function cut_point(var::Float64, numfeatures::Int64)
     return cut
 end
 
-function calculate_fitness(rule::Rule, metrics::Union{Dict{Symbol,Float64},Vector{Symbol},Vector{String}})
+function calculate_fitness(
+    rule::Rule, metrics::Union{Dict{Symbol,Float64},Vector{Symbol},Vector{String}}
+)
     # Convert metrics to Dict format
     metrics_dict = normalize_metrics(metrics)
 
@@ -106,7 +116,11 @@ function get_metric_value(rule::Rule, metric_name::Symbol)
     elseif metric_name == :rhs_support
         return rhs_support(rule)
     else
-        throw(ArgumentError("Unknown metric: $metric_name. Valid metrics are: support, confidence, coverage, interestingness, comprehensibility, amplitude, inclusion, rhs_support"))
+        throw(
+            ArgumentError(
+                "Unknown metric: $metric_name. Valid metrics are: support, confidence, coverage, interestingness, comprehensibility, amplitude, inclusion, rhs_support",
+            ),
+        )
     end
 end
 
@@ -133,7 +147,12 @@ function build_rule(solution::Vector{Float64}, features::Vector{AbstractFeature}
                 min, max = minmax(min, max)
                 feature_type = dtype(feature)
                 if feature_type <: Integer
-                    push!(rule, NumericalAttribute(feature.name, round(feature_type, min), round(feature_type, max)))
+                    push!(
+                        rule,
+                        NumericalAttribute(
+                            feature.name, round(feature_type, min), round(feature_type, max)
+                        ),
+                    )
                 else
                     push!(rule, NumericalAttribute(feature.name, min, max))
                 end
@@ -152,7 +171,7 @@ end
 
 function feature_position(features::Vector{AbstractFeature}, index::Int64)
     position = 1
-    for f in features[begin:index-1]
+    for f in features[begin:(index - 1)]
         position += isnumerical(f) + 2
     end
     return position

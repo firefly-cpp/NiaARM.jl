@@ -1,7 +1,15 @@
 @testset "Metrics Tests" begin
     transactions = CSV.read("test_data/wiki.csv", DataFrame)
-    rule1 = Rule([CategoricalAttribute("Feat1", "A")], [NumericalAttribute("Feat2", 0, 0)], transactions)
-    rule2 = Rule([CategoricalAttribute("Feat1", "B")], [NumericalAttribute("Feat2", 1, 1)], transactions)
+    rule1 = Rule(
+        [CategoricalAttribute("Feat1", "A")],
+        [NumericalAttribute("Feat2", 0, 0)],
+        transactions,
+    )
+    rule2 = Rule(
+        [CategoricalAttribute("Feat1", "B")],
+        [NumericalAttribute("Feat2", 1, 1)],
+        transactions,
+    )
 
     # support
     @test support(rule1) == 3 / 7

@@ -18,16 +18,26 @@ struct NumericalFeature{T<:Real} <: AbstractFeature
     min::T
     max::T
 
-    NumericalFeature{T}(name::String, min::T, max::T) where {T<:Real} = min > max ? throw(ArgumentError("min > max")) : new(name, min, max)    
+    function NumericalFeature{T}(name::String, min::T, max::T) where {T<:Real}
+        return min > max ? throw(ArgumentError("min > max")) : new(name, min, max)
+    end
 
-    NumericalFeature(name::String, min::T, max::T) where {T<:Real} = NumericalFeature{T}(name, min, max)
+    function NumericalFeature(name::String, min::T, max::T) where {T<:Real}
+        return NumericalFeature{T}(name, min, max)
+    end
 end
 
 dtype(feature::NumericalFeature) = first(typeof(feature).parameters)
 
-show(io::IO, feature::NumericalFeature) = print(io, "$(feature.name)(min = $((feature.min)), max = $((feature.max)))")
+function show(io::IO, feature::NumericalFeature)
+    print(io, "$(feature.name)(min = $((feature.min)), max = $((feature.max)))")
+end
 
-==(lhs::NumericalFeature, rhs::NumericalFeature) = lhs.name == rhs.name && isapprox(lhs.min, rhs.min, atol=1e-6, rtol=1e-6) && isapprox(lhs.max, rhs.max, atol=1e-6, rtol=1e-6)
+function ==(lhs::NumericalFeature, rhs::NumericalFeature)
+    return lhs.name == rhs.name &&
+           isapprox(lhs.min, rhs.min; atol=1e-6, rtol=1e-6) &&
+           isapprox(lhs.max, rhs.max; atol=1e-6, rtol=1e-6)
+end
 
 """
     CategoricalFeature(name, categories)
@@ -41,9 +51,13 @@ end
 
 dtype(::CategoricalFeature) = String
 
-show(io::IO, feature::CategoricalFeature) = print(io, "$(feature.name)(categories = $((feature.categories)))")
+function show(io::IO, feature::CategoricalFeature)
+    print(io, "$(feature.name)(categories = $((feature.categories)))")
+end
 
-==(lhs::CategoricalFeature, rhs::CategoricalFeature) = lhs.name == rhs.name && lhs.categories == rhs.categories
+function ==(lhs::CategoricalFeature, rhs::CategoricalFeature)
+    return lhs.name == rhs.name && lhs.categories == rhs.categories
+end
 
 """
     isnumerical(feature)

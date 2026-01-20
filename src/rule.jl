@@ -18,15 +18,32 @@ struct ContingencyTable
 
     ContingencyTable() = new(0, 0, 0, 0, 0.0, 0.0)
 
-    ContingencyTable(countall::Int64, countlhs::Int64, countrhs::Int64, countnull::Int64, amplitude::Float64, inclusion::Float64) = new(countall, countlhs, countrhs, countnull, amplitude, inclusion)
+    function ContingencyTable(
+        countall::Int64,
+        countlhs::Int64,
+        countrhs::Int64,
+        countnull::Int64,
+        amplitude::Float64,
+        inclusion::Float64,
+    )
+        return new(countall, countlhs, countrhs, countnull, amplitude, inclusion)
+    end
 
-    function ContingencyTable(antecedent::Vector{<:AbstractAttribute}, consequent::Vector{<:AbstractAttribute}, transactions::DataFrame)
+    function ContingencyTable(
+        antecedent::Vector{<:AbstractAttribute},
+        consequent::Vector{<:AbstractAttribute},
+        transactions::DataFrame,
+    )
         num_transactions = nrow(transactions)
         contains_antecedent = trues(num_transactions)
         contains_consequent = trues(num_transactions)
 
-        featuresmin = combine(transactions, names(transactions, Real) .=> minimum, renamecols=false)
-        featuresmax = combine(transactions, names(transactions, Real) .=> maximum, renamecols=false)
+        featuresmin = combine(
+            transactions, names(transactions, Real) .=> minimum; renamecols=false
+        )
+        featuresmax = combine(
+            transactions, names(transactions, Real) .=> maximum; renamecols=false
+        )
 
         acc = 0
         for attribute in antecedent
@@ -41,7 +58,8 @@ struct ContingencyTable
                 contains_antecedent .&= transactions[:, attribute.name] .>= attribute.min
                 contains_antecedent .&= transactions[:, attribute.name] .<= attribute.max
             else
-                contains_antecedent .&= transactions[:, attribute.name] .== attribute.category
+                contains_antecedent .&=
+                    transactions[:, attribute.name] .== attribute.category
             end
         end
 
@@ -57,7 +75,8 @@ struct ContingencyTable
                 contains_consequent .&= transactions[:, attribute.name] .>= attribute.min
                 contains_consequent .&= transactions[:, attribute.name] .<= attribute.max
             else
-                contains_consequent .&= transactions[:, attribute.name] .== attribute.category
+                contains_consequent .&=
+                    transactions[:, attribute.name] .== attribute.category
             end
         end
 
@@ -85,13 +104,42 @@ struct Rule
     fitness::Float64
     ct::ContingencyTable
 
-    Rule(antecedent::Vector{<:AbstractAttribute}, consequent::Vector{<:AbstractAttribute}, fitness::Float64, ct::ContingencyTable) = new(antecedent, consequent, fitness, ct)
+    function Rule(
+        antecedent::Vector{<:AbstractAttribute},
+        consequent::Vector{<:AbstractAttribute},
+        fitness::Float64,
+        ct::ContingencyTable,
+    )
+        return new(antecedent, consequent, fitness, ct)
+    end
 
-    Rule(antecedent::Vector{<:AbstractAttribute}, consequent::Vector{<:AbstractAttribute}) = new(antecedent, consequent, -Inf, ContingencyTable())
+    function Rule(
+        antecedent::Vector{<:AbstractAttribute}, consequent::Vector{<:AbstractAttribute}
+    )
+        return new(antecedent, consequent, -Inf, ContingencyTable())
+    end
 
-    Rule(antecedent::Vector{<:AbstractAttribute}, consequent::Vector{<:AbstractAttribute}, transactions::DataFrame) = new(antecedent, consequent, -Inf, ContingencyTable(antecedent, consequent, transactions))
+    function Rule(
+        antecedent::Vector{<:AbstractAttribute},
+        consequent::Vector{<:AbstractAttribute},
+        transactions::DataFrame,
+    )
+        return new(
+            antecedent,
+            consequent,
+            -Inf,
+            ContingencyTable(antecedent, consequent, transactions),
+        )
+    end
 
-    Rule(rule::Rule, transactions::DataFrame) = new(rule.antecedent, rule.consequent, rule.fitness, ContingencyTable(rule.antecedent, rule.consequent, transactions))
+    function Rule(rule::Rule, transactions::DataFrame)
+        return new(
+            rule.antecedent,
+            rule.consequent,
+            rule.fitness,
+            ContingencyTable(rule.antecedent, rule.consequent, transactions),
+        )
+    end
 end
 
 """

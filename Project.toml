@@ -1,7 +1,7 @@
 name = "NiaARM"
 uuid = "cb655f37-3f9a-467f-922e-5a165e048db7"
-version = "0.2.0"
-authors = ["Žiga Stupan <ziga.stupan1@student.um.si>", "Iztok Fister Jr. <iztok@iztok-jr-fister.eu>"]
+version = "0.3.0"
+authors = ["Žiga Stupan <ziga.stupan1@student.um.si>", "Tilen Hliš <tilen.hlis@proton.me>", "Iztok Fister Jr. <iztok@iztok-jr-fister.eu>"]
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"

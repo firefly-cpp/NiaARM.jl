@@ -8,6 +8,8 @@
     @test f3 <= 0.5
     @test f1 == randomsearch(sphere, problem, StoppingCriterion(maxevals=500), seed=1234)
     @test f2 == randomsearch(sphere, problem, StoppingCriterion(maxiters=500), seed=1234)
-    @test f3 == randomsearch(sphere, problem, StoppingCriterion(acceptable_fitness=0.5), seed=1234)
+    @test f3 == randomsearch(
+        sphere, problem, StoppingCriterion(acceptable_fitness=0.5), seed=1234
+    )
     @test f1 == f2
 end

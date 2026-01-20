@@ -2,10 +2,41 @@
 
 ## [Unreleased](https://github.com/firefly-cpp/NiaARM.jl/tree/HEAD)
 
-[Full Changelog](https://github.com/firefly-cpp/NiaARM.jl/compare/v0.2.0...HEAD)
+[Full Changelog](https://github.com/firefly-cpp/NiaARM.jl/compare/v0.3.0...HEAD)
+
+**Closed issues:**
+
+- Add documentation for new developers [\#45](https://github.com/firefly-cpp/NiaARM.jl/issues/45)
+
+## [v0.3.0](https://github.com/firefly-cpp/NiaARM.jl/tree/v0.3.0) (2025-12-16)
+
+[Full Changelog](https://github.com/firefly-cpp/NiaARM.jl/compare/v0.2.0...v0.3.0)
+
+**Closed issues:**
+
+- List of implemented algorithms, metrics [\#38](https://github.com/firefly-cpp/NiaARM.jl/issues/38)
+- Additional interestingness measures [\#30](https://github.com/firefly-cpp/NiaARM.jl/issues/30)
+- Support additional optimization algorithms [\#25](https://github.com/firefly-cpp/NiaARM.jl/issues/25)
+- Mine function [\#23](https://github.com/firefly-cpp/NiaARM.jl/issues/23)
 
 **Merged pull requests:**
 
+- feat: Pipeline visualization. [\#47](https://github.com/firefly-cpp/NiaARM.jl/pull/47) ([HlisTilen](https://github.com/HlisTilen))
+- Add docs [\#46](https://github.com/firefly-cpp/NiaARM.jl/pull/46) ([zStupan](https://github.com/zStupan))
+- Add more interest measures [\#43](https://github.com/firefly-cpp/NiaARM.jl/pull/43) ([zStupan](https://github.com/zStupan))
+- Add FPA [\#42](https://github.com/firefly-cpp/NiaARM.jl/pull/42) ([zStupan](https://github.com/zStupan))
+- Documentation of main components [\#41](https://github.com/firefly-cpp/NiaARM.jl/pull/41) ([firefly-cpp](https://github.com/firefly-cpp))
+- Add FA [\#40](https://github.com/firefly-cpp/NiaARM.jl/pull/40) ([zStupan](https://github.com/zStupan))
+- Add CS [\#39](https://github.com/firefly-cpp/NiaARM.jl/pull/39) ([zStupan](https://github.com/zStupan))
+- Add ABC [\#37](https://github.com/firefly-cpp/NiaARM.jl/pull/37) ([zStupan](https://github.com/zStupan))
+- Add ES [\#36](https://github.com/firefly-cpp/NiaARM.jl/pull/36) ([zStupan](https://github.com/zStupan))
+- Add LSHADE [\#34](https://github.com/firefly-cpp/NiaARM.jl/pull/34) ([zStupan](https://github.com/zStupan))
+- Feature/paper [\#33](https://github.com/firefly-cpp/NiaARM.jl/pull/33) ([HlisTilen](https://github.com/HlisTilen))
+- Fix: rename bat to ba [\#32](https://github.com/firefly-cpp/NiaARM.jl/pull/32) ([HlisTilen](https://github.com/HlisTilen))
+- Add Genetic Algorithm [\#28](https://github.com/firefly-cpp/NiaARM.jl/pull/28) ([zStupan](https://github.com/zStupan))
+- add simulated annealing [\#27](https://github.com/firefly-cpp/NiaARM.jl/pull/27) ([zStupan](https://github.com/zStupan))
+- Add Bat Algorithm optimizer with tests [\#26](https://github.com/firefly-cpp/NiaARM.jl/pull/26) ([HlisTilen](https://github.com/HlisTilen))
+- README [\#24](https://github.com/firefly-cpp/NiaARM.jl/pull/24) ([lahovniktadej](https://github.com/lahovniktadej))
 - Contribution guide [\#22](https://github.com/firefly-cpp/NiaARM.jl/pull/22) ([lahovniktadej](https://github.com/lahovniktadej))
 
 ## [v0.2.0](https://github.com/firefly-cpp/NiaARM.jl/tree/v0.2.0) (2024-02-24)

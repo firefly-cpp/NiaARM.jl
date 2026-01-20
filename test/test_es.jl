@@ -8,7 +8,9 @@
     f5 = es(sphere, problem, StoppingCriterion(maxevals=500), popsize=13, seed=1234)
 
     @test_throws DomainError es(sphere, problem, StoppingCriterion(maxiters=1000), mu=-1)
-    @test_throws DomainError es(sphere, problem, StoppingCriterion(maxiters=1000), mu=20, lambda=10)
+    @test_throws DomainError es(
+        sphere, problem, StoppingCriterion(maxiters=1000), mu=20, lambda=10
+    )
 
     @test f3 <= 1e-5
     @test f1 == es(sphere, problem, StoppingCriterion(maxevals=500), seed=1234)

@@ -7,7 +7,9 @@
     f4 = cs(sphere, problem, StoppingCriterion(maxevals=9), seed=1234)
     f5 = cs(sphere, problem, StoppingCriterion(maxevals=500), popsize=13, seed=1234)
 
-    @test_throws DomainError cs(sphere, problem, StoppingCriterion(maxiters=1000), popsize=0)
+    @test_throws DomainError cs(
+        sphere, problem, StoppingCriterion(maxiters=1000), popsize=0
+    )
     @test_throws DomainError cs(sphere, problem, StoppingCriterion(maxiters=1000), pa=-0.1)
     @test_throws DomainError cs(sphere, problem, StoppingCriterion(maxiters=1000), pa=1.1)
 

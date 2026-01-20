@@ -14,7 +14,8 @@ function fa(
     gamma::Float64=0.01,
     theta::Float64=0.97,
     seed::Union{Int64,Nothing}=nothing,
-    kwargs...)
+    kwargs...,
+)
     if popsize <= 0
         throw(DomainError("popsize <= 0"))
     end
@@ -49,8 +50,8 @@ function fa(
 
     bestfitness = Inf
     for (i, individual) in enumerate(eachrow(population))
-        @inbounds fitness[i] = feval(individual, problem=problem; kwargs...)
-        @inbounds bestfitness = min(bestfitness, fitness[i])
+        fitness[i] = feval(individual; problem=problem, kwargs...)
+        bestfitness = min(bestfitness, fitness[i])
 
         evals += 1
         if terminate(stoppingcriterion, evals, iters, bestfitness)
@@ -67,13 +68,15 @@ function fa(
                     r = sum((population[i, :] .- population[j, :]) .^ 2)
                     beta = beta0 * exp(-gamma * r)
                     steps = newalpha .* (rand(rng, dim) .- 0.5) .* searchrange
-                    @inbounds population[i, :] .= population[i, :] + beta .* (population[j, :] .- population[i, :]) .+ steps
+                    population[i, :] .=
+                        population[i, :] + beta .* (population[j, :] .- population[i, :]) .+
+                        steps
                     clamp!(view(population, i, :), lb, ub)
                 end
             end
 
-            @inbounds fitness[i] = feval(view(population, i, :), problem=problem; kwargs...)
-            @inbounds bestfitness = min(bestfitness, fitness[i])
+            fitness[i] = feval(view(population, i, :); problem=problem, kwargs...)
+            bestfitness = min(bestfitness, fitness[i])
 
             evals += 1
             if terminate(stoppingcriterion, evals, iters, bestfitness)

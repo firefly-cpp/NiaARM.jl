@@ -27,7 +27,9 @@ end
     @test issorted(rules_support, by=x -> x.fitness, rev=true)
 
     metrics_confidence = ["confidence"]
-    rules_confidence = mine(transactions, de, criterion, metrics=metrics_confidence, seed=1234)
+    rules_confidence = mine(
+        transactions, de, criterion, metrics=metrics_confidence, seed=1234
+    )
     @test length(rules_confidence) > 0
     @test issorted(rules_confidence, by=x -> x.fitness, rev=true)
 
@@ -36,10 +38,20 @@ end
     @test length(rules_weighted) > 0
     @test issorted(rules_weighted, by=x -> x.fitness, rev=true)
 
-    metrics_all = [:support, :confidence, :coverage, :interestingness, :comprehensibility, :amplitude, :inclusion, :rhs_support]
+    metrics_all = [
+        :support,
+        :confidence,
+        :coverage,
+        :interestingness,
+        :comprehensibility,
+        :amplitude,
+        :inclusion,
+        :rhs_support,
+    ]
     rules_all = mine(transactions, de, criterion, metrics=metrics_all, seed=1234)
     @test length(rules_all) > 0
     @test issorted(rules_all, by=x -> x.fitness, rev=true)
 
-    @test rules_support[1].fitness != rules_confidence[1].fitness || rules_support[1] == rules_confidence[1]
+    @test rules_support[1].fitness != rules_confidence[1].fitness ||
+        rules_support[1] == rules_confidence[1]
 end

@@ -7,7 +7,9 @@
     f4 = abc(sphere, problem, StoppingCriterion(maxevals=9), seed=1234)
     f5 = abc(sphere, problem, StoppingCriterion(maxevals=500), popsize=13, seed=1234)
 
-    @test_throws DomainError abc(sphere, problem, StoppingCriterion(maxiters=1000), popsize=0)
+    @test_throws DomainError abc(
+        sphere, problem, StoppingCriterion(maxiters=1000), popsize=0
+    )
     @test_throws DomainError abc(sphere, problem, StoppingCriterion(maxiters=1000), limit=0)
 
     @test f3 <= 1e-5

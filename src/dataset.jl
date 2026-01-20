@@ -13,11 +13,11 @@ struct Dataset
     function Dataset(df::DataFrame)
         features = getfeatures(df)
         dim = problemdim(features)
-        new(df, features, dim)
+        return new(df, features, dim)
     end
 
     function Dataset(path::String)
-        df = DataFrame(CSV.File(path, header=1, delim=","))
+        df = DataFrame(CSV.File(path; header=1, delim=","))
         return Dataset(df)
     end
 end

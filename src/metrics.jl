@@ -177,5 +177,6 @@ inclusion(r::Rule) = inclusion(r.ct)
 Log-scaled measure preferring rules with smaller antecedents relative to consequents.
 """
 function comprehensibility(r::Rule)
-    return log(1 + length(r.consequent)) / log(1 + length(r.antecedent) + length(r.consequent))
+    return log(1 + length(r.consequent)) /
+           log(1 + length(r.antecedent) + length(r.consequent))
 end

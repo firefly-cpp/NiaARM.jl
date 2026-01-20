@@ -19,9 +19,13 @@ struct NumericalAttribute{T<:Real} <: AbstractAttribute
     min::T
     max::T
 
-    NumericalAttribute{T}(name::String, min::T, max::T) where {T<:Real} = min > max ? throw(ArgumentError("min > max")) : new(name, min, max)
+    function NumericalAttribute{T}(name::String, min::T, max::T) where {T<:Real}
+        return min > max ? throw(ArgumentError("min > max")) : new(name, min, max)
+    end
 
-    NumericalAttribute(name::String, min::T, max::T) where {T<:Real} = NumericalAttribute{T}(name, min, max)
+    function NumericalAttribute(name::String, min::T, max::T) where {T<:Real}
+        return NumericalAttribute{T}(name, min, max)
+    end
 end
 
 """
@@ -32,9 +36,15 @@ categorical elements, `String` is returned.
 """
 dtype(attribute::NumericalAttribute) = first(typeof(attribute).parameters)
 
-show(io::IO, attribute::NumericalAttribute) = print(io, "$(attribute.name)(min = $((attribute.min)), max = $((attribute.max)))")
+function show(io::IO, attribute::NumericalAttribute)
+    print(io, "$(attribute.name)(min = $((attribute.min)), max = $((attribute.max)))")
+end
 
-==(lhs::NumericalAttribute, rhs::NumericalAttribute) = lhs.name == rhs.name && isapprox(lhs.min, rhs.min, atol=1e-6, rtol=1e-6) && isapprox(lhs.max, rhs.max, atol=1e-6, rtol=1e-6)
+function ==(lhs::NumericalAttribute, rhs::NumericalAttribute)
+    return lhs.name == rhs.name &&
+           isapprox(lhs.min, rhs.min; atol=1e-6, rtol=1e-6) &&
+           isapprox(lhs.max, rhs.max; atol=1e-6, rtol=1e-6)
+end
 
 """
     CategoricalAttribute(name, category)
@@ -49,9 +59,13 @@ end
 
 dtype(::CategoricalAttribute) = String
 
-show(io::IO, attribute::CategoricalAttribute) = print(io, "$(attribute.name)(category = $((attribute.category)))")
+function show(io::IO, attribute::CategoricalAttribute)
+    print(io, "$(attribute.name)(category = $((attribute.category)))")
+end
 
-==(lhs::CategoricalAttribute, rhs::CategoricalAttribute) = lhs.name == rhs.name && lhs.category == rhs.category
+function ==(lhs::CategoricalAttribute, rhs::CategoricalAttribute)
+    return lhs.name == rhs.name && lhs.category == rhs.category
+end
 
 """
     isnumerical(attribute)

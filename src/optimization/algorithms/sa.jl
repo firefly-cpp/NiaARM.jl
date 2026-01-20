@@ -4,7 +4,17 @@
 Simulated Annealing with Gaussian perturbations. Accepts worse solutions according to
 the current temperature to escape local minima and cools multiplicatively.
 """
-function sa(feval::Function, problem::Problem, stoppingcriterion::StoppingCriterion; initial_temp::Float64=100.0, min_temp=1e-12, cooling_rate::Float64=0.95, step_size::Float64=0.1, seed::Union{Int64,Nothing}=nothing, kwargs...)
+function sa(
+    feval::Function,
+    problem::Problem,
+    stoppingcriterion::StoppingCriterion;
+    initial_temp::Float64=100.0,
+    min_temp=1e-12,
+    cooling_rate::Float64=0.95,
+    step_size::Float64=0.1,
+    seed::Union{Int64,Nothing}=nothing,
+    kwargs...,
+)
     if initial_temp <= 0.0
         throw(DomainError("initial_temp <= 0.0"))
     end
@@ -21,8 +31,10 @@ function sa(feval::Function, problem::Problem, stoppingcriterion::StoppingCriter
     iters = 0
     rng = Xoshiro(seed)
 
-    current = problem.lowerinit .+ rand!(rng, zeros(problem.dimension)) .* (problem.upperinit - problem.lowerinit)
-    current_fitness = feval(current, problem=problem; kwargs...)
+    current =
+        problem.lowerinit .+
+        rand!(rng, zeros(problem.dimension)) .* (problem.upperinit - problem.lowerinit)
+    current_fitness = feval(current; problem=problem, kwargs...)
 
     best = copy(current)
     bestfitness = current_fitness
@@ -39,7 +51,7 @@ function sa(feval::Function, problem::Problem, stoppingcriterion::StoppingCriter
         neighbor = current .+ step_size .* randn!(rng, similar(current))
         neighbor = clamp!(neighbor, problem.lowerbound, problem.upperbound)
 
-        neighbor_fitness = feval(neighbor, problem=problem; kwargs...)
+        neighbor_fitness = feval(neighbor; problem=problem, kwargs...)
         evals += 1
 
         delta = neighbor_fitness - current_fitness

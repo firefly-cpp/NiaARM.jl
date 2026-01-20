@@ -5,11 +5,21 @@ Particle Swarm Optimization with inertia weight. Maintains a swarm of candidate 
 updating velocities toward personal and global best positions while respecting problem
 bounds.
 """
-function pso(feval::Function, problem::Problem, stoppingcriterion::StoppingCriterion; popsize::Int64=10, omega::Float64=0.7, c1::Float64=2.0, c2::Float64=2.0, seed::Union{Int64,Nothing}=nothing, kwargs...)
+function pso(
+    feval::Function,
+    problem::Problem,
+    stoppingcriterion::StoppingCriterion;
+    popsize::Int64=10,
+    omega::Float64=0.7,
+    c1::Float64=2.0,
+    c2::Float64=2.0,
+    seed::Union{Int64,Nothing}=nothing,
+    kwargs...,
+)
     evals = 0
     iters = 0
     rng = Xoshiro(seed)
-    
+
     range = problem.upperbound - problem.lowerbound
     lowervelocity = -range
     uppervelocity = range
@@ -21,8 +31,8 @@ function pso(feval::Function, problem::Problem, stoppingcriterion::StoppingCrite
     bestfitness = Inf
     bestindex = 1
     for (i, individual) in enumerate(eachrow(pop))
-        f = feval(individual, problem=problem; kwargs...)
-        @inbounds fitness[i] = f
+        f = feval(individual; problem=problem, kwargs...)
+        fitness[i] = f
         if f < bestfitness
             bestfitness = f
         end
@@ -34,20 +44,23 @@ function pso(feval::Function, problem::Problem, stoppingcriterion::StoppingCrite
     end
 
     while !terminate(stoppingcriterion, evals, iters, bestfitness)
-        for i = 1:popsize
-            for d = 1:problem.dimension
-                @inbounds velocity[i, d] = omega * velocity[i, d] + c1 * rand(rng) * (pbest[i, d] - pop[i, d]) + c2 * rand(rng) * (pop[bestindex, d] - pop[i, d])
-                @inbounds velocity[i, d] = clamp(velocity[i, d], lowervelocity, uppervelocity)
+        for i in 1:popsize
+            for d in 1:problem.dimension
+                velocity[i, d] =
+                    omega * velocity[i, d] +
+                    c1 * rand(rng) * (pbest[i, d] - pop[i, d]) +
+                    c2 * rand(rng) * (pop[bestindex, d] - pop[i, d])
+                velocity[i, d] = clamp(velocity[i, d], lowervelocity, uppervelocity)
             end
 
-            @inbounds pop[i, :] = pop[i, :] .+ velocity[i, :]
-            @inbounds pop[i, :] = clamp!(pop[i, :], problem.lowerbound, problem.upperbound)
+            pop[i, :] = pop[i, :] .+ velocity[i, :]
+            pop[i, :] = clamp!(pop[i, :], problem.lowerbound, problem.upperbound)
 
-            newfitness = feval(pop[i, :], problem=problem; kwargs...)
+            newfitness = feval(pop[i, :]; problem=problem, kwargs...)
 
             if newfitness < fitness[i]
-                @inbounds fitness[i] = newfitness
-                @inbounds pbest[i, :] = pop[i, :]
+                fitness[i] = newfitness
+                pbest[i, :] = pop[i, :]
 
                 if newfitness < bestfitness
                     bestindex = i
@@ -60,7 +73,6 @@ function pso(feval::Function, problem::Problem, stoppingcriterion::StoppingCrite
             if terminate(stoppingcriterion, evals, iters, bestfitness)
                 return bestfitness
             end
-
         end
 
         iters += 1

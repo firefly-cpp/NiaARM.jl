@@ -12,28 +12,29 @@ function cs(
     popsize::Int64=25,
     pa::Float64=0.25,
     seed::Union{Int64,Nothing}=nothing,
-    kwargs...)
+    kwargs...,
+)
     if popsize <= 0
         throw(DomainError("popsize <= 0"))
     end
-    
+
     if pa < 0 || pa > 1
         throw(DomainError("pa must be in [0, 1]"))
     end
-    
+
     evals = 0
     iters = 0
     rng = Xoshiro(seed)
-    
+
     dim = problem.dimension
     lb = problem.lowerbound
     ub = problem.upperbound
-    
+
     population = initpopulation(popsize, problem, rng)
     fitness = zeros(popsize)
     newpopulation = similar(population)
     newfitness = zeros(popsize)
-    
+
     bestfitness = Inf
     bestindex = 1
 
@@ -45,8 +46,8 @@ function cs(
     perm_j = Vector{Int64}(undef, popsize)
 
     for (i, individual) in enumerate(eachrow(population))
-        f = feval(individual, problem=problem; kwargs...)
-        @inbounds fitness[i] = f
+        f = feval(individual; problem=problem, kwargs...)
+        fitness[i] = f
         if f < bestfitness
             bestfitness = f
             bestindex = i
@@ -61,13 +62,16 @@ function cs(
         randlevy!(rng, levy_steps)
         randn!(rng, random_steps)
 
-        @inbounds for i = 1:popsize
-            for j = 1:dim
-                stepsize[i, j] = levy_steps[i, j] * (population[i, j] - population[bestindex, j])
-                newpopulation[i, j] = clamp(population[i, j] + stepsize[i, j] * random_steps[i, j], lb, ub)
+        for i in 1:popsize
+            for j in 1:dim
+                stepsize[i, j] =
+                    levy_steps[i, j] * (population[i, j] - population[bestindex, j])
+                newpopulation[i, j] = clamp(
+                    population[i, j] + stepsize[i, j] * random_steps[i, j], lb, ub
+                )
             end
 
-            newfitness[i] = feval(view(newpopulation, i, :), problem=problem; kwargs...)
+            newfitness[i] = feval(view(newpopulation, i, :); problem=problem, kwargs...)
             if newfitness[i] < fitness[i]
                 population[i, :] .= newpopulation[i, :]
                 fitness[i] = newfitness[i]
@@ -88,13 +92,15 @@ function cs(
         randperm!(rng, perm_j)
         r = rand(rng)
 
-        @inbounds for i = 1:popsize
-            for j = 1:dim
+        for i in 1:popsize
+            for j in 1:dim
                 stepsize[i, j] = r * (population[perm_i[i], j] - population[perm_j[i], j])
-                newpopulation[i, j] = clamp(population[i, j] + stepsize[i, j] * abandoned[i, j], lb, ub)
+                newpopulation[i, j] = clamp(
+                    population[i, j] + stepsize[i, j] * abandoned[i, j], lb, ub
+                )
             end
 
-            newfitness[i] = feval(view(newpopulation, i, :), problem=problem; kwargs...)
+            newfitness[i] = feval(view(newpopulation, i, :); problem=problem, kwargs...)
             if newfitness[i] < fitness[i]
                 population[i, :] .= newpopulation[i, :]
                 fitness[i] = newfitness[i]

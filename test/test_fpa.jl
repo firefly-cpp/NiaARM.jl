@@ -7,7 +7,9 @@
     f4 = fpa(sphere, problem, StoppingCriterion(maxevals=9), seed=1234)
     f5 = fpa(sphere, problem, StoppingCriterion(maxevals=500), popsize=13, seed=1234)
 
-    @test_throws DomainError fpa(sphere, problem, StoppingCriterion(maxiters=1000), popsize=0)
+    @test_throws DomainError fpa(
+        sphere, problem, StoppingCriterion(maxiters=1000), popsize=0
+    )
     @test_throws DomainError fpa(sphere, problem, StoppingCriterion(maxiters=1000), p=-0.1)
     @test_throws DomainError fpa(sphere, problem, StoppingCriterion(maxiters=1000), p=1.1)
 

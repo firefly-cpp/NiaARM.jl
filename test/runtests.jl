@@ -5,6 +5,7 @@ using Random
 using Test
 
 @testset verbose = true "NiaARM.jl Tests" begin
+    include("test_aqua.jl")
     include("test_attribute.jl")
     include("test_feature.jl")
     include("test_dataset.jl")

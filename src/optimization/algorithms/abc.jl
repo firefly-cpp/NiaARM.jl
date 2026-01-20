@@ -16,7 +16,8 @@ function abc(
     popsize::Int64=20,
     limit::Int64=100,
     seed::Union{Int64,Nothing}=nothing,
-    kwargs...)
+    kwargs...,
+)
     if popsize < 2
         throw(DomainError("popsize < 2"))
     end
@@ -45,7 +46,7 @@ function abc(
 
     bestfitness = Inf
     for i in 1:foodnumber
-        objval = feval(foods[i, :], problem=problem; kwargs...)
+        objval = feval(foods[i, :]; problem=problem, kwargs...)
         objvals[i] = objval
         fitness[i] = calculatefitness(objval)
         bestfitness = min(bestfitness, objval)
@@ -58,7 +59,7 @@ function abc(
 
     while !terminate(stoppingcriterion, evals, iters, bestfitness)
         # Worker bee phase
-        @inbounds for i = 1:foodnumber
+        for i in 1:foodnumber
             param2change = rand(rng, 1:n)
 
             neighbour = rand(rng, 1:foodnumber)
@@ -67,13 +68,15 @@ function abc(
             end
 
             sol = copy(foods[i, :])
-            sol[param2change] = foods[i, param2change] +
-                                (foods[i, param2change] - foods[neighbour, param2change]) *
-                                (rand(rng) - 0.5) * 2
+            sol[param2change] =
+                foods[i, param2change] +
+                (foods[i, param2change] - foods[neighbour, param2change]) *
+                (rand(rng) - 0.5) *
+                2
 
             sol = clamp.(sol, lb, ub)
 
-            objval = feval(sol, problem=problem; kwargs...)
+            objval = feval(sol; problem=problem, kwargs...)
             fitnessval = calculatefitness(objval)
 
             if fitnessval > fitness[i]
@@ -107,13 +110,15 @@ function abc(
                 end
 
                 sol = copy(foods[i, :])
-                sol[param2change] = foods[i, param2change] +
-                                    (foods[i, param2change] - foods[neighbour, param2change]) *
-                                    (rand(rng) - 0.5) * 2
+                sol[param2change] =
+                    foods[i, param2change] +
+                    (foods[i, param2change] - foods[neighbour, param2change]) *
+                    (rand(rng) - 0.5) *
+                    2
 
                 sol = clamp.(sol, lb, ub)
 
-                objval = feval(sol, problem=problem; kwargs...)
+                objval = feval(sol; problem=problem, kwargs...)
                 fitnessval = calculatefitness(objval)
 
                 if fitnessval > fitness[i]
@@ -147,7 +152,7 @@ function abc(
         if trial[ind] > limit
             trial[ind] = 0
             sol = (ub - lb) .* rand(rng, n) .+ lb
-            objval = feval(sol, problem=problem; kwargs...)
+            objval = feval(sol; problem=problem, kwargs...)
             fitnessval = calculatefitness(objval)
             foods[ind, :] = sol
             fitness[ind] = fitnessval

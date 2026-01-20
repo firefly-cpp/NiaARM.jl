@@ -15,7 +15,8 @@ function es(
     tau::Union{Float64,Nothing}=nothing,
     tauprime::Union{Float64,Nothing}=nothing,
     seed::Union{Int64,Nothing}=nothing,
-    kwargs...)
+    kwargs...,
+)
     if mu < 1
         throw(DomainError("mu < 1"))
     end
@@ -48,9 +49,9 @@ function es(
     fitness = zeros(mu)
     bestfitness = Inf
 
-    for i = 1:mu
-        @inbounds fx = feval(population[i, :], problem=problem; kwargs...)
-        @inbounds fitness[i] = fx
+    for i in 1:mu
+        fx = feval(population[i, :]; problem=problem, kwargs...)
+        fitness[i] = fx
         if fx < bestfitness
             bestfitness = fx
         end
@@ -65,19 +66,22 @@ function es(
     offspringfitness = zeros(lambda)
 
     while !terminate(stoppingcriterion, evals, iters, bestfitness)
-        @inbounds for i = 1:lambda
+        for i in 1:lambda
             parentindex = rand(rng, 1:mu)
 
             # Self-adapt step size
             globalnoise = randn(rng)
-            offspringsigma[i, :] = popsigma[parentindex, :] .* exp.(tauprime * globalnoise .+ tau .* randn(rng, n))
+            offspringsigma[i, :] =
+                popsigma[parentindex, :] .*
+                exp.(tauprime * globalnoise .+ tau .* randn(rng, n))
             offspringsigma[i, :] = clamp.(offspringsigma[i, :], sigmamin, sigmamax)
-            
+
             # Mutate
-            offspring[i, :] = population[parentindex, :] .+ offspringsigma[i, :] .* randn(rng, n)
+            offspring[i, :] =
+                population[parentindex, :] .+ offspringsigma[i, :] .* randn(rng, n)
             offspring[i, :] = clamp.(offspring[i, :], lb, ub)
 
-            fx = feval(offspring[i, :], problem=problem; kwargs...)
+            fx = feval(offspring[i, :]; problem=problem, kwargs...)
             offspringfitness[i] = fx
 
             if fx < bestfitness

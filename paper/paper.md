@@ -41,4 +41,8 @@ Despite the growing importance of NARM in domains such as finance, sport, and me
 
 - The framework is designed in a modular way, allowing components to be flexibly combined and extended.
 
+## AI usage disclosure
+
+During the preparation of this work the authors used language tools such as Lumo (the AI assistant from Proton), Grammarly in order to improve the article's readability. After using these tools, the authors reviewed and edited the content as needed and take full responsibility for the content of the published article. During codebase development, AI-assisted tools were used minimally for documentation refinement. The core architecture and code implementations were designed and implemented by the authors. The majority of the codebase had been designed and implemented prior to the widespread adoption of AI-assisted development tools, ensuring that the conceptual design, architectural decisions, and core algorithmic implementations are entirely the result of the authors original work.
+
 # References

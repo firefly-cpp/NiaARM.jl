@@ -2,7 +2,7 @@
     support(ct::ContingencyTable)
     support(rule::Rule)
 
-Fraction of transactions that satisfy both antecedent and consequent.
+Fraction of transactions that satisfy both antecedent and consequent. Returns 0.0 if undefined.
 """
 function support(t::ContingencyTable)
     n = t.countall + t.countlhs + t.countrhs + t.countnull
@@ -16,7 +16,7 @@ support(r::Rule) = support(r.ct)
     confidence(ct::ContingencyTable)
     confidence(rule::Rule)
 
-Conditional probability of the consequent given the antecedent.
+Conditional probability of the consequent given the antecedent. Returns 0.0 if undefined.
 """
 function confidence(t::ContingencyTable)
     count_x = t.countall + t.countlhs
@@ -30,7 +30,7 @@ confidence(r::Rule) = confidence(r.ct)
     rhs_support(ct::ContingencyTable)
     rhs_support(rule::Rule)
 
-Support of the consequent alone.
+Support of the consequent alone. 
 """
 function rhs_support(t::ContingencyTable)
     n = t.countall + t.countlhs + t.countrhs + t.countnull

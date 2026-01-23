@@ -3,7 +3,7 @@
 
 Objective function used by optimization algorithms. Decodes `solution` into a rule,
 evaluates it on `transactions` with the provided `metrics`, and inserts novel rules into
-`rules`. Returns the negated fitness so minimizers can be used for maximization.
+`rules`. Returns the negated fitness so minimizers can be used for maximization. 
 """
 function narm(
     solution::AbstractVector{Float64};

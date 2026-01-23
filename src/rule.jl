@@ -176,7 +176,7 @@ countrhs(r::Rule) = countrhs(r.ct)
     countnull(ct::ContingencyTable)
     countnull(rule::Rule)
 
-Number of transactions satisfying neither antecedent nor consequent.
+Number of transactions satisfying neither antecedent nor consequent. 
 """
 countnull(ct::ContingencyTable) = ct.countnull
 

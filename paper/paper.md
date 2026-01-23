@@ -46,6 +46,14 @@ Despite the growing importance of NARM in domains such as finance, sport, and me
 
 - The framework is designed in a modular way, allowing components to be flexibly combined and extended.
 
+# Research impact statement
+
+The application of nature-inspired algorithms to numerical association rule mining has been explored in several studies [@fister2018differential], leading to the development of the Python based NiaARM framework [@stupan2022niaarm]. These tools have been applied in various domains, including sport science, healthcare, smart agriculture, and environmental monitoring, demonstrating the versatility of the optimization-driven approach to rule mining.
+
+The impact of NiaARM.jl lies in providing the dedicated Julia framework for numerical association rule mining and also in extending the reach of this established methodology to a new community of researchers who benefit from Julia's strengths in high-performance scientific computing. By integrating with NarmViz.jl [@fister2024narmviz] for visualization, NiaARM.jl offers visual representations of discovered rules. This contributes to greater trust and usability of mined rules in sensitive domains such as healthcare and environmental sciences, or in general where interpretability is important.
+
+Furthermore, NiaARM.jl provides implementations of multiple nature-inspired algorithms that can serve as reference implementations for researchers studying metaheuristic optimization, thereby contributing to reproducibility and comparative studies in the field. The modular architecture encourages community-driven extensions, enabling researchers to rapidly prototype new algorithmic variants and interestingness measures.
+
 ## AI usage disclosure
 
 During the preparation of this work the authors used language tools such as Lumo (the AI assistant from Proton), Grammarly in order to improve the article's readability. After using these tools, the authors reviewed and edited the content as needed and take full responsibility for the content of the published article. During codebase development, AI-assisted tools were used for documentation refinement. The majority of the codebase had been designed and implemented prior to the widespread adoption of AI-assisted development tools, ensuring that the conceptual design, architectural decisions, and core algorithmic implementations are entirely the result of the authors original work.

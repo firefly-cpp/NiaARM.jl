@@ -28,7 +28,7 @@ NiaARM.jl is an open-source Julia package for Numerical Association Rule Mining 
 
 # State of the Field
 
-Classical association rule mining (ARM) is well supported in general purpose libraries such as the R package *arules* [@hahsler2005arules], the SPMF Java library [@fournier2020spmf], and the Julia package RuleMiner.jl [@ruleminerjl]. These tools focus on frequent itemset and rule mining over categorical or discretized data. Frameworks such as uARMSolver [@fister2020uarmsolver] go a step further by formulating ARM as an optimization problem and supporting numerical attributes, but they target general ARM rather than NARM.
+Classical association rule mining (ARM) is well supported in general purpose libraries such as the R package *arules* [@hahsler2005arules], the SPMF Java library [@fournier2020spmf], and the Julia package RuleMiner.jl [@ruleminerjl]. These tools focus on frequent itemset and rule mining over categorical or discretized data. Frameworks such as uARMSolver [@fister2020uarmsolver] go a step further by formulating ARM as an optimization problem and supporting numerical attributes.
 
 Dedicated support for NARM is currently provided mainly by the original Python based NiaARM framework [@stupan2022niaarm] and the more recent *niarules* package for R [@fister2026niarules]. Both adopt population-based nature-inspired algorithms to search for numerical association rules.
 

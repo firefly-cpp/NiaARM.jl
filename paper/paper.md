@@ -26,6 +26,14 @@ bibliography: paper.bib
 
 NiaARM.jl is an open-source Julia package for Numerical Association Rule Mining (NARM) based on stochastic population-based nature-inspired optimization algorithms [@telikani2020survey]. It brings the capabilities of the original Python-based NiaARM framework [@stupan2022niaarm] to the Julia ecosystem, enabling researchers and data scientists working with datasets with mixed attribute types (consisting of categorical and numerical attributes) to discover numerical association rules. NiaARM.jl supports loading datasets, preprocessing, association rule mining, and extraction of discovered rules with associated interestingness metrics. In line with the rule mining part, this package also implements several well-known stochastic population-based nature-inspired algorithms, such as Differential Evolution (DE) [@storn1997differential], Artificial Bee Colony (ABC) [@karaboga2007powerful], Particle Swarm Optimization (PSO) [@kennedy1995particle], and several other metaphor-based nature-inspired algorithms to act as solvers for the numerical association rule mining task. The entire numerical association rule mining workflow is further supported by visualization methods for numerical association rules, which is achieved through NarmViz.jl, a package well integrated with NiaARM.jl [@fister2024narmviz].
 
+# State of the Field
+
+Classical association rule mining (ARM) is well supported in general purpose libraries such as the R package *arules* [@hahsler2005arules], the SPMF Java library [@fournier2020spmf], and the Julia package RuleMiner.jl [@ruleminerjl]. These tools focus on frequent itemset and rule mining over categorical or discretized data. Frameworks such as uARMSolver [@fister2020uarmsolver] go a step further by formulating ARM as an optimization problem and supporting numerical attributes, but they target general ARM rather than NARM.
+
+Dedicated support for NARM is currently provided mainly by the original Python based NiaARM framework [@stupan2022niaarm] and the more recent *niarules* package for R [@fister2026niarules]. Both adopt population-based nature-inspired algorithms to search for numerical association rules.
+
+NiaARM.jl is designed as a Julia native, modular re-implementation of this line of work rather than a wrapper around existing frameworks. It combines the full NARM pipeline (data handling, problem formulation, optimization, and rule representation) with extensibility for new interestingness measures and optimization algorithms, and integrates tightly with NarmViz.jl for visualization. In this way, NiaARM.jl complements existing Python and R frameworks while filling a gap in the Julia ecosystem for high performance NARM.
+
 # Software Design
 
 The core of NiaARM.jl is organized around four main modules: (1) the `Dataset` module, which handles loading and preprocessing of transaction data from CSV files or DataFrames, representing numerical attributes as interval features and categorical attributes as sets of categories; (2) the `Problem` module, which formulates numerical association rule mining as a continuous optimization problem, where candidate solutions are encoded as real-valued vectors and decoded into association rules; (3) the optimization algorithms module, which provides implementations of various nature-inspired algorithms that explore the search space to identify rules; and (4) the `Rule` module, which represents discovered association rules and provides methods for computing interestingness measures.
@@ -46,13 +54,13 @@ Despite the growing importance of NARM in domains such as finance, sport, and me
 
 - The framework is designed in a modular way, allowing components to be flexibly combined and extended.
 
-# Research impact statement
+# Research Impact Statement
 
 NiaARM.jl framework lowers the barrier to high-performance NARM by making NARM accessible, faster than previous implementations especially on complex datasets, and extensible within the Julia ecosystem. By providing a dedicated Julia framework for dealing with NARM tasks, the package extends an established methodology that was previously available primarily in the Python programming language. It allows researchers and practitioners who rely on Julia for high-performance scientific computing to solve NARM tasks. NiaARM.jl is also well integrated with other packages, for example NarmViz, which extends the rule mining pipeline to include visualization.
 
 In addition to its applied impact, NiaARM.jl contributes to methodological research by providing reference implementations of multiple stochastic population-based nature-inspired algorithms within a unified framework. This supports reproducibility, benchmarking, and comparative studies in metaheuristic optimization beyond solving NARM tasks alone. The modular design of the framework encourages community-driven extensions, enabling rapid prototyping of new algorithms, fitness functions, and interestingness measures.
 
-## AI usage disclosure
+## AI Usage Disclosure
 
 During the preparation of this work the authors used language tools such as Lumo (the AI assistant from Proton), Grammarly in order to improve the article's readability. After using these tools, the authors reviewed and edited the content as needed and take full responsibility for the content of the published article. During codebase development, AI-assisted tools were used for documentation refinement and code readability. The majority of the codebase had been designed and implemented prior to the widespread adoption of AI-assisted development tools, ensuring that the conceptual design, architectural decisions, and core algorithmic implementations are entirely the result of the authors original work.
 

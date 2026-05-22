@@ -9,6 +9,7 @@
 [![codecov](https://codecov.io/github/firefly-cpp/NiaARM.jl/graph/badge.svg?token=V0ZG799H5H)](https://codecov.io/github/firefly-cpp/NiaARM.jl)
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/JuliaDiff/BlueStyle)
 [![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.09925/status.svg)](https://doi.org/10.21105/joss.09925)
 
 <p align="center">
   <a href="#-detailed-insights">✨ Detailed insights</a> •
@@ -63,6 +64,24 @@ rules = mine(transactions, de, criterion, metrics=metrics, seed=1234)
 for rule in rules
     println(rule)
 end
+```
+## 📚 Citation
+
+If you use NiaARM.jl in your research, please cite our [JOSS paper](https://joss.theoj.org/papers/10.21105/joss.09925):
+
+```bibtex
+@article{Stupan2026,
+  doi = {10.21105/joss.09925},
+  url = {https://doi.org/10.21105/joss.09925},
+  year = {2026},
+  publisher = {The Open Journal},
+  volume = {11},
+  number = {120},
+  pages = {9925},
+  author = {Stupan, Žiga and Hliš, Tilen and Fister Jr., Iztok},
+  title = {NiaARM.jl: A Julia Framework for Numerical Association Rule Mining Using Nature-Inspired Optimization Algorithms},
+  journal = {Journal of Open Source Software}
+}
 ```
 
 ## 📄 Reference papers

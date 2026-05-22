@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+
+title: "NiaARM.jl: A Julia Framework for Numerical Association Rule Mining Using Nature-Inspired Optimization Algorithms"
+
+authors:
+  - family-names: Stupan
+    given-names: Žiga
+    orcid: "https://orcid.org/0000-0001-9847-7306"
+  - family-names: Hliš
+    given-names: Tilen
+    orcid: "https://orcid.org/0000-0002-4973-4844"
+  - family-names: Fister Jr.
+    given-names: Iztok
+    orcid: "https://orcid.org/0000-0002-6418-1272"
+
+doi: "10.21105/joss.09925"
+url: "https://github.com/firefly-cpp/NiaARM.jl"
+repository-code: "https://github.com/firefly-cpp/NiaARM.jl"
+
+date-released: "2026-04-01"
+license: "MIT"
+
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Stupan
+      given-names: Žiga
+      orcid: "https://orcid.org/0000-0001-9847-7306"
+    - family-names: Hliš
+      given-names: Tilen
+      orcid: "https://orcid.org/0000-0002-4973-4844"
+    - family-names: Fister Jr.
+      given-names: Iztok
+      orcid: "https://orcid.org/0000-0002-6418-1272"
+  doi: "10.21105/joss.09925"
+  journal: "Journal of Open Source Software"
+  month: 4
+  start: 9925
+  title: "NiaARM.jl: A Julia Framework for Numerical Association Rule Mining Using Nature-Inspired Optimization Algorithms"
+  volume: 11
+  issue: 120
+  year: 2026
